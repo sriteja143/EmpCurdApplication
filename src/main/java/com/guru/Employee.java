@@ -1,13 +1,29 @@
 package com.guru;
 
+
 import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.PostLoad;
+import javax.persistence.PostPersist;
+import javax.persistence.PostUpdate;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
+import javax.transaction.Transactional;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import io.micrometer.core.instrument.util.StringUtils;
+
 
 @Entity
+//@EntityListeners({ Employee.class })
 public class Employee {
 
+	private static final Logger log = LoggerFactory.getLogger(Employee.class);
+	
 	@Id
 	private long empid;
 	private String empname;
@@ -82,4 +98,30 @@ public class Employee {
 		// TODO Auto-generated constructor stub
 	}
 
+	@PrePersist
+	@PreUpdate
+    public void prePersistFunction() {
+
+        log.info("PrePersist method called");
+
+        if(StringUtils.isEmpty(dept)){
+        	dept = "STANDARD_CUSTOMER";
+        }
+        
+//        if("NONIT".equalsIgnoreCase(dept)){
+//        	throw new Exception("MENIONED DEPT IS NOT ABLE TO SAVE");
+//        }
+    }
+	
+	@PostUpdate
+	@PostPersist
+	@PostLoad
+	@Transactional
+	public void postLoadAttributes() {
+		 log.debug("caling  ------------------ postLoadAttributes---------------");
+	  if (dept != null && "STANDARD_CUSTOMER".equals(dept)) {
+	    log.debug("SYTEM GENERATED DEPT ::::::::::::::::");
+	  }
+	}
+	
 }

@@ -4,7 +4,10 @@ import java.util.List;
 
 import javax.websocket.server.PathParam;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,8 +23,10 @@ import com.guru.exceptionhandling.ErrortypeLocal;
 import com.guru.service.EmployeeService;
 import com.guru.service.Type;
 
-@RestController("/")
+@RestController("/emp")
 public class EmployeeController {
+	
+	Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	@Autowired
 	EmployeeService empservice;
@@ -72,6 +77,16 @@ public class EmployeeController {
 			throw new EmployeeNotFoundException("emp not found with provided id");
 		}
 		throw new Exception("Created error");
+	}
+	
+	
+	@GetMapping("/log")
+	public void  getLog() throws Exception {
+		logger.info(" --------------- INFO LOGGER --------------- ");
+		logger.debug(" --------------- DEBUG LOGGER --------------- ");
+		logger.trace(" --------------- TRACE LOGGER --------------- ");
+		logger.error(" --------------- ERROR LOGGER --------------- ");
+		logger.warn(" --------------- WARN LOGGER --------------- ");
 	}
 	
 }

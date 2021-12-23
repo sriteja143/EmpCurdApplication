@@ -62,7 +62,7 @@ class EmployeeServiceTest2 {
 	//	when(repo.findById(anyLong())).thenReturn(opemp);
 	//	when(employeeService.get(anyLong())).thenReturn(emp);
 		
-		assertEquals(employeeService.get(1L).getEmpid(), new Employee(1, "GURU", new Date(), new Date(), "JAVA PRACTICE").getEmpid());
+		assertEquals(employeeService.get(1L).getEmpid(), 1L);
 	}
 	
 	@Test

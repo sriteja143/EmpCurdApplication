@@ -19,7 +19,7 @@ class SampleRestTemplateTest {
 	
 	@Test
 	void testRestTemplate() {
-		String url = "http://localhost:8080/";
+		String url = "http://localhost:9897/";
 		RestTemplate template = new RestTemplate();
 		ResponseEntity<String> resp = template.getForEntity(url, String.class);
 		System.out.println(resp.getBody());
